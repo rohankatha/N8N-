@@ -1,0 +1,435 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -736,
+        -96
+      ],
+      "id": "c664ee2f-13a2-402e-a8c8-d0c555ce3fab",
+      "name": "When chat message received",
+      "webhookId": "21b24026-66a5-4cad-8bed-51b97fa69b25"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        -16
+      ],
+      "id": "45b40df6-d68e-4594-baa7-aa763c512dde",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -208
+      ],
+      "id": "fd1c7be7-1012-46f1-b870-ba2f7050d1dd",
+      "name": "Cohere Chat Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "YkOrJYzUtLgkKwHt",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        -224
+      ],
+      "id": "daa2ca8c-d7d3-4ea3-a84a-55ae9b3f048c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "katharohanreddy@gmail.com",
+        "subject": "n8n automated message",
+        "message": "=Hello rohan,  {{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        704,
+        -80
+      ],
+      "id": "19b9af5f-23ee-4c61-86b9-449553fcad88",
+      "name": "Send a message",
+      "webhookId": "48853134-9832-448b-9052-0e918797af29",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "SzLxTmhAUI54rneQ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.sheldonbrown.com/web_sample1.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -688,
+        176
+      ],
+      "id": "1f28e057-e229-4443-a2de-1505d97cd62a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Summarize the given html document  {{ $json.data }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        256
+      ],
+      "id": "1feb46f3-df40-4aaf-9eff-04f6b0e421fb",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        352
+      ],
+      "id": "c7a3a9eb-9c9b-468c-8987-282e05ab7687",
+      "name": "Cohere Chat Model1",
+      "credentials": {
+        "cohereApi": {
+          "id": "YkOrJYzUtLgkKwHt",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "katharohanreddy@gmail.com",
+        "subject": "Message from agent 1",
+        "message": "=Hello rohan  {{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        784,
+        256
+      ],
+      "id": "960db44a-2899-45ee-941e-bc39e7acb7e9",
+      "name": "Send a message1",
+      "webhookId": "5d9d8ece-ef06-414b-afc5-acd4f3cad6dc",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "SzLxTmhAUI54rneQ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"video\": \"https://cdn.creatomate.com/demo/video5.mp4\",\n  \"text-1\": {{ $json.output }},\n  \"text-2\": \"It's easy to create videos with your own workflows!\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        592
+      ],
+      "id": "ebb434e6-edab-4dcb-8c57-6318e39140b5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.creatomate.com/v1/renders",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer d652860955eb46b8815d05354782518e9f6baaf3f4a383edf9ce9992d6215242385a5e8fd6c695a50d430585d1dac0d5"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"template_id\": \"cc2456f5-bee6-4929-847b-77a345469120\",\n  \"modifications\": {\n    \"Video.source\": \"{{ $json.video }}\",\n    \"Text-1.text\": \"{{ $json['text-1'] }}\",\n    \"Text-2.text\": \"{{ $json['text-2'] }}\"  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        544,
+        592
+      ],
+      "id": "fcaa363f-747e-4a1b-b212-468b5020ee39",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "sendTo": "katharohanreddy@gmail.com",
+        "subject": "URL N8n",
+        "message": "=Hello rohan please find the url  {{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        992,
+        560
+      ],
+      "id": "db386b6b-18e1-42b4-bf0b-64db4ac84c19",
+      "name": "Send a message2",
+      "webhookId": "3d492c9a-3763-489d-8df8-c7ea5711eccb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "SzLxTmhAUI54rneQ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create only one catchy slogan for the  {{ $json.Name }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -352,
+        576
+      ],
+      "id": "36b80cd1-2fe6-49d0-bbef-876c45b630a2",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        768
+      ],
+      "id": "c6c78455-1e13-4a70-8b60-cc61e675fc99",
+      "name": "Cohere Chat Model2",
+      "credentials": {
+        "cohereApi": {
+          "id": "YkOrJYzUtLgkKwHt",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Webform",
+        "formDescription": "Input web form",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Katha rohan"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -912,
+        544
+      ],
+      "id": "49956b32-505d-4b69-8f8c-754297b62932",
+      "name": "On form submission",
+      "webhookId": "97fad5b9-6df4-4528-94db-fb7187e76d19"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "145ba31b-a8e4-416a-9a23-23e4a28eb981",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4860ad945762f15f882241c0f128d8f08c0ca94b46f1fe628c9868960e72bd48"
+  },
+  "id": "4WzVC2iuCl4V8s1V",
+  "tags": []
+}
